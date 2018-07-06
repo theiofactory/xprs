@@ -1,0 +1,17 @@
+{
+  "name": "xprs",
+  "version": "1.0.0",
+  "description": "Express CLI",
+  "main": "cli/app.js",
+  "repository": "https://github.com/narayananramu/xprs.git",
+  "author": "Narayanan M Ramanathan <narayananramu6@gmail.com>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "commander": "^2.16.0",
+    "del": "^3.0.0",
+    "inquirer": "^6.0.0",
+    "shelljs": "^0.8.2",
+    "validate-npm-package-name": "^3.0.0"
+  }
+}
