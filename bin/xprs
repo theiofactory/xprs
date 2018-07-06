@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+const app = require('./../cli/app');
+
+app.parse(process.argv);
