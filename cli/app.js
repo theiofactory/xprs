@@ -9,6 +9,11 @@ program
         newCommand(name);
     });
 
+program
+    .command('create <type> <name>')
+    .alias('c')
+    .description(`\tThe "xprs create" command uses templates to create a whole lot of things.\n\n\troute <routename>\t\tcreates a IO Express Router with Controller with name.\n\tmodel <modelname>\t\tcreates a IO Express Model in the models directory.\n\tmiddleware <middlewarename>\tcreates a IO Express Middleware in the middleware directory.\n`)
+
 if (process.argv.length < 3) {
     program.help()
 }
