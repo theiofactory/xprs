@@ -7,6 +7,9 @@
   "author": "Narayanan M Ramanathan <narayananramu6@gmail.com>",
   "license": "UNLICENSED",
   "private": true,
+  "bin": {
+    "xprs": "bin/xprs"
+  },
   "dependencies": {
     "commander": "^2.16.0",
     "del": "^3.0.0",
