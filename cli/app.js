@@ -1,6 +1,7 @@
 const program = require('commander');
 const newCommand = require('./new');
 const createRoute = require('./create/Route');
+const createOthers = require('./create/Others');
 
 program
     .command('new <name>')
@@ -18,6 +19,14 @@ program
         if (type === 'route') {
             name = name.split("/");
             createRoute('routes', name.slice(0, name.length - 1).join('/'), name[name.length - 1]);
+        } else if (type === 'route') {
+            createOthers(type, name);
+        } else if (type === 'handler') {
+            createOthers(type, name);
+        } else if (type === 'middleware') {
+            createOthers(type, name);
+        } else if (type === 'model') {
+            createOthers('models', name);
         }
     });
 if (process.argv.length < 3) {
