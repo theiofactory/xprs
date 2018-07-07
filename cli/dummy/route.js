@@ -4,6 +4,6 @@ import controller from './controller';
 
 const router = express.Router();
 
-router.use('/', controller);
+router.get('/', controller);
 
 export default router;
