@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Express CLI",
   "main": "cli/app.js",
-  "repository": "https://github.com/narayananramu/xprs.git",
+  "repository": "https://github.com/theiofactory/xprs.git",
   "author": "Narayanan M Ramanathan <narayananramu6@gmail.com>",
   "license": "UNLICENSED",
   "private": true,
