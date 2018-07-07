@@ -1,5 +1,6 @@
 const program = require('commander');
 const newCommand = require('./new');
+const createRoute = require('./create/Route');
 
 program
     .command('new <name>')
@@ -13,7 +14,12 @@ program
     .command('create <type> <name>')
     .alias('c')
     .description(`\tThe "xprs create" command uses templates to create a whole lot of things.\n\n\troute <routename>\t\tcreates a IO Express Router with Controller with name.\n\tmodel <modelname>\t\tcreates a IO Express Model in the models directory.\n\tmiddleware <middlewarename>\tcreates a IO Express Middleware in the middleware directory.\n`)
-
+    .action(function(type, name){
+        if (type === 'route') {
+            name = name.split("/");
+            createRoute('routes', name.slice(0, name.length - 1).join('/'), name[name.length - 1]);
+        }
+    });
 if (process.argv.length < 3) {
     program.help()
 }
