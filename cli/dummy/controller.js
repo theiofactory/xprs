@@ -2,8 +2,8 @@
  * @function
  * @name CONTROLLER
  * @description CONTROLLER description.
- * @param {request} - Request object.
- * @param {response} - response object.
+ * @param {request} request - Request object.
+ * @param {response} response - response object.
  *
  * @returns {String} - CONTROLLER return details
  */
