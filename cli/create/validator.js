@@ -4,9 +4,9 @@ const path = require('path');
 const validation = {
     isIOExpress: function() {
         return new Promise(function(resolve, reject) {
-            const controllerPath = path.join(process.cwd(), '/src/controller');
-            const handlerPath = path.join(process.cwd(), '/src/handler');
-            const middlewarePath = path.join(process.cwd(), '/src/middleware');
+            const controllerPath = path.join(process.cwd(), '/src/controllers');
+            const handlerPath = path.join(process.cwd(), '/src/handlers');
+            const middlewarePath = path.join(process.cwd(), '/src/middlewares');
             const modelsPath = path.join(process.cwd(), '/src/models');
             const routesPath = path.join(process.cwd(), '/src/routes');
             return (
