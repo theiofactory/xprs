@@ -3,22 +3,35 @@ const path = require('path');
 
 async function newRoute(name) {
     // read & copy controller route
-    const dummyController = fs.readFileSync(path.join(__dirname, '../dummy/controller.js')).toString();
-    fs.mkdirSync(path.join(process.cwd(), '/src/controller', name));
-    fs.writeFileSync(path.join(process.cwd(), 'src/controller', name, 'index.controller.js'), dummyController);
+    let dummyController = fs.readFileSync(path.join(__dirname, '../dummy/controller.js')).toString();
+    dummyController = dummyController.replace(/CONTROLLER/g, 'index');
+    fs.mkdirSync(path.join(process.cwd(), '/src/controllers', name));
+    fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, 'index.controller.js'), dummyController);
+    // read & copy dummy controller test
+    let dummyControllerTest = fs.readFileSync(path.join(__dirname, '../dummy/controller.spec.js')).toString();
+    dummyControllerTest = dummyControllerTest.replace(/CONTROLLER/g, 'index');
+    dummyControllerTest = dummyControllerTest.replace('./index', './index.controller');
+    fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, 'index.controller.spec.js'), dummyControllerTest);
     // read & copy dummy route
     let dummyRoute = fs.readFileSync(path.join(__dirname, '../dummy/route.js')).toString();
-    dummyRoute = dummyRoute.replace(/controller/g, 'index');
-    dummyRoute = dummyRoute.replace('./index', `./../controller/${name}/index.controller`);
+    dummyRoute = dummyRoute.replace(/CONTROLLER/g, 'index');
+    dummyRoute = dummyRoute.replace('./index', `./../controllers/${name}/index.controller`);
     fs.writeFileSync(path.join(process.cwd(), 'src/routes', `${name}.js`), dummyRoute);
+    // read & copy dummy e2e test
+    let dummyRouteE2ETest = fs.readFileSync(path.join(__dirname, '../dummy/route.spec.js')).toString();
+    if (!fs.existsSync(path.join(process.cwd(), 'e2e'))) {
+        fs.mkdirSync(path.join(process.cwd(), 'e2e'));
+    }
+    fs.mkdirSync(path.join(process.cwd(), 'e2e', name));
+    fs.writeFileSync(path.join(process.cwd(), 'e2e', name, 'index.spec.js'), dummyRouteE2ETest);
     // read & edit main route
     let routeFile = fs.readFileSync(path.join(process.cwd(), 'src/routes/index.js')).toString();
     routeFile = routeFile.split('\n');
     // import controller
     const importBeforeIndex = routeFile.findIndex(item => item.includes('const router =')) - 1;
-    routeFile = [...routeFile.slice(0, importBeforeIndex), `import ${name} from './${name}';`, ...routeFile.slice(importBeforeIndex, routeFile.length)];
+    routeFile = [...routeFile.slice(0, importBeforeIndex), `const ${name} = require('./${name}');`, ...routeFile.slice(importBeforeIndex, routeFile.length)];
     // edit routes
-    const insertBeforeIndex = routeFile.findIndex(item => item.includes('export default')) - 1;
+    const insertBeforeIndex = routeFile.findIndex(item => item.includes('module.exports')) - 1;
     routeFile = [...routeFile.slice(0, insertBeforeIndex), `router.use('/${name}', ${name});`, ...routeFile.slice(insertBeforeIndex, routeFile.length)];
     // save route
     fs.writeFileSync(path.join(process.cwd(), 'src/routes/index.js'), routeFile.join('\n'));
