@@ -26,7 +26,7 @@ program
         } else if (type === 'middleware') {
             createOthers(type, name);
         } else if (type === 'model') {
-            createOthers('models', name);
+            createOthers('model', name);
         }
     });
 if (process.argv.length < 3) {
