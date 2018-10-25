@@ -8,7 +8,7 @@ function createProject(package) {
     const outputDir = path.join(currentDir, package.name);
     
     console.log("Cloning Git Repository");
-    const clonning = shell.exec(`git clone https://github.com/theiofactory/restapi ${package.name}`)
+    const clonning = shell.exec(`git clone -b v2 --single-branch https://github.com/theiofactory/restapi ${package.name}`)
     if(clonning.code !== 0) {
         return -1;
     }
