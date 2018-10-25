@@ -13,10 +13,10 @@ async function createRoute(type, directory, name) {
                 return -1;
             }
             try {
-                await Validator.ioExpressDirectoryExists('controller', directory);
+                await Validator.ioExpressDirectoryExists('controllers', directory);
                 await Validator.ioExpressFileExists(type, './', `${directory}.js`);
                 try {
-                    await Validator.ioExpressFileExists('controller', directory, `${name}.controller.js`);
+                    await Validator.ioExpressFileExists('controllers', directory, `${name}.controller.js`);
                     console.log(`You are trying to create a sub route that already exists.`);
                     return -1;
                 } catch (e) {
@@ -30,6 +30,7 @@ async function createRoute(type, directory, name) {
             newRoute(name);
         }
     } catch (e) {
+        console.log(e);
         console.log(`Run 'xprs create' command from a valid 'IO Express' project root!`);
         return -1;
     }
