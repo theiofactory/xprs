@@ -25,7 +25,6 @@ function createProject(package) {
     let envArray = env.toString().split("\n");
     envArray.splice( envArray.indexOf('#APP BASIC') + 1, 0, `APP_NAME=${package.name}\nAPP_VERSION=${package.version}\nAPP_DESCRIPTION=${(package.description === '') ? package.name + ' description' : package.description }` );
     fs.writeFileSync(`${ outputDir }/.env`, envArray.join('\n'));
-    fs.unlinkSync(`${ outputDir }/sample.env`)
 
     console.log("Installing Dependencies");
     const npmInstall = shell.exec(`cd ${outputDir} && npm install && cd ${currentDir}`)
