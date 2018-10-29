@@ -7,6 +7,11 @@ async function newSubRoute(directory, name, method) {
     let dummyController = fs.readFileSync(path.join(__dirname, '../dummy/controller.js')).toString();
     dummyController = dummyController.replace(/CONTROLLER/g, name);
     fs.writeFileSync(path.join(process.cwd(), 'src/controllers', directory, `${importName}.controller.js`), dummyController);
+    // read & copy controller test
+    let dummyControllerTest = fs.readFileSync(path.join(__dirname, '../dummy/controller.spec.js')).toString();
+    dummyControllerTest = dummyControllerTest.replace(/CONTROLLER/g, name);
+    dummyControllerTest = dummyControllerTest.replace(`./${name}`, `./${importName}.controller`);
+    fs.writeFileSync(path.join(process.cwd(), 'src/controllers', directory, `${importName}.controller.spec.js`), dummyControllerTest);
     // read & copy dummy e2e test
     const dummyRouteE2ETest = fs.readFileSync(path.join(__dirname, '../dummy/route.spec.js')).toString();
     fs.writeFileSync(path.join(process.cwd(), 'e2e', directory, `${importName}.spec.js`), dummyRouteE2ETest);
