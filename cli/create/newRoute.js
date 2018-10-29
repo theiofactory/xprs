@@ -17,6 +17,43 @@ async function newRoute(name) {
     dummyRoute = dummyRoute.replace(/CONTROLLER/g, 'index');
     dummyRoute = dummyRoute.replace('./index', `./../controllers/${name}/index.controller`);
     fs.writeFileSync(path.join(process.cwd(), 'src/routes', `${name}.js`), dummyRoute);
+    // copy dummy swagger path file
+    let swaggerPath = {
+        '/': {
+            get: {
+                description: "API Status Page",
+                tags: [
+                    "index"
+                ],
+                produces: [
+                    "text/plain",
+                    "application/json"
+                ],
+                responses: {
+                    "200": {
+                        "description": "returns success message",
+                        "schema": {
+                            "$ref": "#/definitions/indexControllerResponse"
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    }
+                }
+            }
+        }
+    }
+    fs.writeFileSync(path.join(process.cwd(), 'src/routes', `${name}.paths.swagger.json`), JSON.stringify(swaggerPath, null, 4));
+    fs.writeFileSync(path.join(process.cwd(), 'src/routes', `${name}.components.swagger.json`), JSON.stringify({}, null, 4));
     // read & copy dummy e2e test
     let dummyRouteE2ETest = fs.readFileSync(path.join(__dirname, '../dummy/route.spec.js')).toString();
     if (!fs.existsSync(path.join(process.cwd(), 'e2e'))) {
