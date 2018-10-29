@@ -11,9 +11,9 @@
     "xprs": "bin/xprs"
   },
   "dependencies": {
-    "commander": "^2.16.0",
+    "commander": "^2.19.0",
     "del": "^3.0.0",
-    "inquirer": "^6.0.0",
+    "inquirer": "^6.2.0",
     "shelljs": "^0.8.2",
     "validate-npm-package-name": "^3.0.0"
   }
