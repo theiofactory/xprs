@@ -38,12 +38,6 @@ const questions = function(name) {
         },
         {
             type: 'input',
-            name: 'Version',
-            message: 'Version',
-            default: '1.0.0'
-        },
-        {
-            type: 'input',
             name: 'repository',
             message: 'Repository',
         },
