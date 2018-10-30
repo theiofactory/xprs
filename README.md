@@ -1,6 +1,6 @@
-# Express cli
+# Express CLI
 
-**Cli for working with express**
+**CLI for Express.js**
 
 ## Installation
 
@@ -18,7 +18,7 @@ $ brew install node
 $ brew doctor && brew update && brew upgrade && brew cleanup && brew prune && brew doctor
 ```
 
-Once the above steps are complete, and your system is happy …
+Once the above steps are complete, and your system is happy!
 
 ### Installation process
 
@@ -54,12 +54,12 @@ Create Components:
 - Route
 ```bash
 $ xprs create route <routeName>
-$ xprs create route <routeName>.<subRouteName>
+$ xprs create route <routeName>/<subRouteName>
 ```
 - Controller
 ```bash
 $ xprs create controller <controllerName>
-$ xprs create controller <controllerName>.<controllerName>
+$ xprs create controller <controllerName>/<controllerName>
 ```
 
 - Handler
@@ -69,7 +69,7 @@ $ xprs create handler <handlerName>
 
 - Middleware
 ```bash
-$ xprs create middlewate <middlewareName>
+$ xprs create middleware <middlewareName>
 ```
 
 - Model
