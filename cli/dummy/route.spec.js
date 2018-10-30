@@ -7,7 +7,7 @@ describe('check ROUTE route', () => {
             app,
             req: {
                 method: 'GET',
-                url: 'URL',
+                url: 'ROUTE',
             },
             res: {
                 status: 200,
