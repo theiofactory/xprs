@@ -3,8 +3,8 @@ const httpMocks = require('node-mocks-http');
 
 const CONTROLLER = require('./CONTROLLER');
 
-describe('Controller check', () => {
-    it('Check Controller', () => {
+describe('CONTROLLER check', () => {
+    it('Check CONTROLLER', () => {
         const request = httpMocks.createRequest({
             method: 'GET',
             url: '/',
