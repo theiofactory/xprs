@@ -3,8 +3,8 @@ const httpMocks = require('node-mocks-http');
 
 const MIDDLEWARE = require('./MIDDLEWARE');
 
-describe('Dummy middleware check', () => {
-    it('Check dummy middleware', () => {
+describe('MIDDLEWARE middleware check', () => {
+    it('Check MIDDLEWARE middleware', () => {
         const request = httpMocks.createRequest({
             method: 'GET',
             url: '/',
