@@ -1,6 +1,6 @@
-# Express cli
+# Express CLI
 
-**Cli for working with express**
+**CLI for working with express**
 
 ## Installation
 
