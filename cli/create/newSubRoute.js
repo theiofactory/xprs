@@ -27,6 +27,10 @@ async function newSubRoute(directory, name, method) {
     routeFile = [...routeFile.slice(0, insertBeforeIndex), `router.${method}('/${name}', ${importName});`, ...routeFile.slice(insertBeforeIndex, routeFile.length)];
     // save route
     fs.writeFileSync(path.join(process.cwd(), 'src/routes', `${directory}.js`), routeFile.join('\n'));
+    console.log(`Controller         :  src/controllers/${directory}/${importName}.controller.js`);
+    console.log(`Sub Route          :  src/routes/${directory}.js [route: ${name}]`);
+    console.log(`Controller Test    :  src/controllers/${directory}/${importName}.controller.spec.js`);
+    console.log(`Sub Route E2E Test :  e2e/${directory}/${importName}.spec.js`);
 }
 
 module.exports = newSubRoute;

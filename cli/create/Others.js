@@ -27,6 +27,8 @@ async function createOthers(type, name) {
             }
             fs.writeFileSync(path.join(process.cwd(), 'src', type + 's', `${name}.${type}.js`), dummyFile)
             fs.writeFileSync(path.join(process.cwd(), 'src', type + 's', `${name}.${type}.spec.js`), dummyFileTest)
+            console.log(`${type.charAt(0).toUpperCase() + type.slice(1)} created      : src/${type}s/${name}.${type}.js`);
+            console.log(`${type.charAt(0).toUpperCase() + type.slice(1)} Test created : src/${type}s/${name}.${type}.spec.js`);
             return -1;
         }
     } catch (e) {
