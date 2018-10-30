@@ -56,6 +56,7 @@ async function newRoute(name) {
     fs.writeFileSync(path.join(process.cwd(), 'src/routes', `${name}.components.swagger.json`), JSON.stringify({}, null, 4));
     // read & copy dummy e2e test
     let dummyRouteE2ETest = fs.readFileSync(path.join(__dirname, '../dummy/route.spec.js')).toString();
+    dummyRouteE2ETest = dummyRouteE2ETest.replace(/ROUTE/g, `/${name}`);
     if (!fs.existsSync(path.join(process.cwd(), 'e2e'))) {
         fs.mkdirSync(path.join(process.cwd(), 'e2e'));
     }
