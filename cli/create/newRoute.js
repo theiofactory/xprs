@@ -73,6 +73,11 @@ async function newRoute(name) {
     routeFile = [...routeFile.slice(0, insertBeforeIndex), `router.use('/${name}', ${name});`, ...routeFile.slice(insertBeforeIndex, routeFile.length)];
     // save route
     fs.writeFileSync(path.join(process.cwd(), 'src/routes/index.js'), routeFile.join('\n'));
+
+    console.log(`Controller      :  src/controllers/${name}/index.controller.js`);
+    console.log(`Route           :  src/routes/${name}.js`);
+    console.log(`Controller Test :  src/controllers/${name}/index.controller.spec.js`);
+    console.log(`Route E2E Test  :  e2e/${name}/index.spec.js`);
 }
 
 module.exports = newRoute;
