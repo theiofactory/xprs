@@ -69,7 +69,7 @@ $ xprs create handler <handlerName>
 
 - Middleware
 ```bash
-$ xprs create middlewate <middlewareName>
+$ xprs create middleware <middlewareName>
 ```
 
 - Model
