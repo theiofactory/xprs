@@ -54,12 +54,12 @@ Create Components:
 - Route
 ```bash
 $ xprs create route <routeName>
-$ xprs create route <routeName>.<subRouteName>
+$ xprs create route <routeName>/<subRouteName>
 ```
 - Controller
 ```bash
 $ xprs create controller <controllerName>
-$ xprs create controller <controllerName>.<controllerName>
+$ xprs create controller <controllerName>/<controllerName>
 ```
 
 - Handler
