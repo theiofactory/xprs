@@ -20,12 +20,10 @@ program
     .action(function(type, name, destination, destinationFileName){
         if (type === 'route') {
             name = name.split("/");
-            createRoute('routes', name[name.length - 1]);
+            createRoute('routes', name.slice(0, name.length - 1).join('/'), name[name.length - 1]);
         } else if(type === 'controller') {
             name = name.split('/');
             createController(type, name, destination);
-        }else if (type === 'route') {
-            createOthers(type, name);
         } else if (type === 'handler') {
             createOthers(type, name);
         } else if (type === 'middleware') {
