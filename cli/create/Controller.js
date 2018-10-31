@@ -40,7 +40,7 @@ async function createController (type, name, destination) {
                 controllerTestFileContent = controllerTestFileContent.replace(`./${destination}`, `./${destination}.controller`);
                 await fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name[0], `${destination}.controller.js`), controllerFileContent);
                 await fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name[0], `${destination}.controller.spec.js`), controllerTestFileContent);
-                console.log(`Controller created successfully at ${path.join(process.cwd(), 'src/controllers', name[0], `${destination}.controller.js`)}`);
+                console.log(`Controller created successfully at ${path.join(name[0], `${destination}.controller.js`)}`);
                 return -1;
             } catch (err) {
                 console.log('No such route exists');
