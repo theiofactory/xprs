@@ -25,9 +25,7 @@ async function createController (type, name, destination) {
                     indexRoute = routeContent.findIndex(el => el.includes('\'/\''));
                 } else {
                     const pattern = `'/${(name.splice(1)).join('/')}'`;
-                    console.log(pattern);
                     indexRoute = routeContent.findIndex(el => el.includes(pattern));
-                    console.log(indexRoute);
                     if (indexRoute === -1) {
                         console.log('No such route exists');
                         return -1;
@@ -43,7 +41,7 @@ async function createController (type, name, destination) {
                 controllerTestFileContent = controllerTestFileContent.replace(`./${destination}`, `./${destination}.controller`);
                 await fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name[0], `${destination}.controller.js`), controllerFileContent);
                 await fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name[0], `${destination}.controller.spec.js`), controllerTestFileContent);
-                console.log(`Controller created successfully at ${path.join(process.cwd(), 'src/controllers', name[0], `${destination}.controller.js`), controllerFileContent}`);
+                console.log(`Controller created successfully at ${path.join(process.cwd(), 'src/controllers', name[0], `${destination}.controller.js`)}`);
                 return -1;
             } catch (err) {
                 console.log('No such route exists');
