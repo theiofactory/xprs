@@ -30,7 +30,6 @@ async function createRoute(type, directory, name) {
             newRoute(name);
         }
     } catch (e) {
-        console.log(e);
         console.log(`Run 'xprs create' command from a valid 'IO Express' project root!`);
         return -1;
     }
