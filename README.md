@@ -58,8 +58,8 @@ $ xprs create route <routeName>/<subRouteName>
 ```
 - Controller
 ```bash
-$ xprs create controller <controllerName>
-$ xprs create controller <controllerName>/<controllerName>
+$ xprs create controller <routeName> <controllerName>
+$ xprs create controller <routeName>/<subRouteName> <controllerName>
 ```
 
 - Handler
