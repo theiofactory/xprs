@@ -4,7 +4,6 @@ const Validator = require('./validator');
 
 async function createController (type, name, destination) {
     try {
-        console.log(name);
         await Validator.isIOExpress();
         try {
             if (typeof destination === 'undefined') {
