@@ -3,6 +3,48 @@ const path = require('path');
 
 async function newSubRoute(directory, name, method, definitionArg) {
     const importName = `${method}${name.charAt(0).toUpperCase()}${name.slice(1, name.length)}`;
+    // read & edit route
+    let routeFile = fs.readFileSync(path.join(process.cwd(), 'src/routes', `${directory}.js`)).toString();
+    routeFile = routeFile.split('\n');
+    const checkMethodExistance = routeFile.findIndex(el => el === `router.${method}('/${name}', ${importName});`);
+    if (checkMethodExistance !== -1) {
+        console.log('Route already exists');
+        return -1;
+    }
+    // Updare swagger path file
+    const currentPathFile = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/routes', `${directory}.paths.swagger.json`)).toString());
+    currentPathFile[`/${name}`] = {};
+    currentPathFile[`/${name}`][method] = {
+        description: `${method} ${name} Status Page`,
+            tags: [
+                directory
+            ],
+            produces: [
+                'text/plain',
+                'application/json'
+            ],
+            responses: {
+                '200': {
+                    'description': 'returns success message',
+                    'schema': {
+                        '$ref': '#/definitions/indexControllerResponse'
+                    }
+                },
+                '400': {
+                    '$ref': '#/components/responses/400'
+                },
+                '401': {
+                    '$ref': '#/components/responses/401'
+                },
+                '404': {
+                    '$ref': '#/components/responses/404'
+                },
+                '500': {
+                    '$ref': '#/components/responses/500'
+                }
+            }
+    }
+    fs.writeFileSync(path.join(process.cwd(), 'src/routes', `${directory}.paths.swagger.json`), JSON.stringify(currentPathFile, null, 4));
     // read & copy controller route
     let dummyController = fs.readFileSync(path.join(__dirname, '../dummy/controller.js')).toString();
     dummyController = dummyController.replace(/CONTROLLER/g, name);
@@ -10,10 +52,10 @@ async function newSubRoute(directory, name, method, definitionArg) {
     if (definitionArg) {
         const def = {};
         def[`${importName}ControllerResponse`] = {
-            type: "",
-            example: ""
+            type: '',
+            example: ''
         }
-        fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, 'index.definitions.swagger.json'), JSON.stringify(def, null, 4));
+        fs.writeFileSync(path.join(process.cwd(), 'src/controllers', directory, `${importName}.definitions.swagger.json`), JSON.stringify(def, null, 4));
     }
     // read & copy controller test
     let dummyControllerTest = fs.readFileSync(path.join(__dirname, '../dummy/controller.spec.js')).toString();
@@ -24,9 +66,7 @@ async function newSubRoute(directory, name, method, definitionArg) {
     let dummyRouteE2ETest = fs.readFileSync(path.join(__dirname, '../dummy/route.spec.js')).toString();
     dummyRouteE2ETest = dummyRouteE2ETest.replace(/ROUTE/g, `${directory}/${name}`);
     fs.writeFileSync(path.join(process.cwd(), 'e2e', directory, `${importName}.spec.js`), dummyRouteE2ETest);
-    // read & edit route
-    let routeFile = fs.readFileSync(path.join(process.cwd(), 'src/routes', `${directory}.js`)).toString();
-    routeFile = routeFile.split('\n');
+    
     // import controller
     const importBeforeIndex = routeFile.findIndex(item => item.includes('const router =')) - 1;
     routeFile = [...routeFile.slice(0, importBeforeIndex), `const ${importName} = require('./../controllers/${directory}/${importName}.controller');`, ...routeFile.slice(importBeforeIndex, routeFile.length)];
