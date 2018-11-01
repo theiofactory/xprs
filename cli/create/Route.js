@@ -2,7 +2,7 @@ const Validator = require('./validator');
 const newRoute = require('./newRoute');
 const newSubRoute = require('./newSubRoute');
 
-async function createRoute(type, directory, name) {
+async function createRoute(type, directory, name, tagArg, definitionArg) {
     try {
         await Validator.isIOExpress();
         try {
@@ -20,14 +20,14 @@ async function createRoute(type, directory, name) {
                     console.log(`You are trying to create a sub route that already exists.`);
                     return -1;
                 } catch (e) {
-                    newSubRoute(directory, name, 'get');
+                    newSubRoute(directory, name, 'get', definitionArg);
                 }
             } catch (e) {
                 console.log(`Create the route /${ directory } first!`);
             }
             return -1;
         } catch (e) {
-            newRoute(name);
+            newRoute(name, tagArg, definitionArg);
         }
     } catch (e) {
         console.log(`Run 'xprs create' command from a valid 'IO Express' project root!`);
