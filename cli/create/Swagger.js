@@ -11,8 +11,8 @@ async function createRoute(type, name, destination, destinationFileName) {
             console.log('You are trying to create a swagger defination that already exists.')
         } catch (e) {
             const def = {};
-            if (name === 'defination' || name === 'component') {
-                if (name === 'defination') {
+            if (name === 'definition' || name === 'component') {
+                if (name === 'definition') {
                     def[`${(destinationFileName.indexOf('.') > -1) ? destinationFileName.split('.')[1] : 'index'}ControllerResponse`] = {
                         type: "",
                         example: ""
