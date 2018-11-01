@@ -1,12 +1,21 @@
 const fs = require('fs');
 const path = require('path');
 
-async function newRoute(name) {
+async function newRoute(name, tagArg, definitionArg) {
     // read & copy controller route
     let dummyController = fs.readFileSync(path.join(__dirname, '../dummy/controller.js')).toString();
     dummyController = dummyController.replace(/CONTROLLER/g, 'index');
     fs.mkdirSync(path.join(process.cwd(), '/src/controllers', name));
     fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, 'index.controller.js'), dummyController);
+    if (definitionArg) {
+        const def = {
+            indexControllerResponse: {
+                type: '',
+                example: ''
+            }
+        };
+        fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, 'index.definitions.swagger.json'), JSON.stringify(def, null, 4));
+    }
     // read & copy dummy controller test
     let dummyControllerTest = fs.readFileSync(path.join(__dirname, '../dummy/controller.spec.js')).toString();
     dummyControllerTest = dummyControllerTest.replace(/CONTROLLER/g, 'index');
@@ -52,8 +61,9 @@ async function newRoute(name) {
             }
         }
     }
-    fs.writeFileSync(path.join(process.cwd(), 'src/routes', `${name}.paths.swagger.json`), JSON.stringify(swaggerPath, null, 4));
-    fs.writeFileSync(path.join(process.cwd(), 'src/routes', `${name}.components.swagger.json`), JSON.stringify({}, null, 4));
+    await fs.writeFileSync(path.join(process.cwd(), 'src/routes', `${name}.paths.swagger.json`), JSON.stringify(swaggerPath, null, 4));
+    await fs.writeFileSync(path.join(process.cwd(), 'src/routes', `${name}.components.swagger.json`), JSON.stringify({}, null, 4));
+    if (tagArg) fs.writeFileSync(path.join(process.cwd(), 'src/routes', `${name}.tags.swagger.json`), JSON.stringify({}, null, 4));
     // read & copy dummy e2e test
     let dummyRouteE2ETest = fs.readFileSync(path.join(__dirname, '../dummy/route.spec.js')).toString();
     dummyRouteE2ETest = dummyRouteE2ETest.replace(/ROUTE/g, `/${name}`);
