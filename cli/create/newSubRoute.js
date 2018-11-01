@@ -1,12 +1,20 @@
 const fs = require('fs');
 const path = require('path');
 
-async function newSubRoute(directory, name, method) {
+async function newSubRoute(directory, name, method, definitionArg) {
     const importName = `${method}${name.charAt(0).toUpperCase()}${name.slice(1, name.length)}`;
     // read & copy controller route
     let dummyController = fs.readFileSync(path.join(__dirname, '../dummy/controller.js')).toString();
     dummyController = dummyController.replace(/CONTROLLER/g, name);
     fs.writeFileSync(path.join(process.cwd(), 'src/controllers', directory, `${importName}.controller.js`), dummyController);
+    if (definitionArg) {
+        const def = {};
+        def[`${importName}ControllerResponse`] = {
+            type: "",
+            example: ""
+        }
+        fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, 'index.definitions.swagger.json'), JSON.stringify(def, null, 4));
+    }
     // read & copy controller test
     let dummyControllerTest = fs.readFileSync(path.join(__dirname, '../dummy/controller.spec.js')).toString();
     dummyControllerTest = dummyControllerTest.replace(/CONTROLLER/g, name);
