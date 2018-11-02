@@ -1,8 +1,18 @@
 const fs = require('fs');
 const path = require('path');
 
+Array.prototype.multiIndexOf = function (el) { 
+    var idxs = [];
+    for (var i = this.length - 1; i >= 0; i--) {
+        if (this[i] === el) {
+            idxs.unshift(i);
+        }
+    }
+    return idxs;
+};
+
 async function newSubRoute(directory, name, method, definitionArg) {
-    const importName = `${method}${name.charAt(0).toUpperCase()}${name.slice(1, name.length)}`;
+    const importName = `${method}${(((name.humanize('/')).humanize(':')).humanize('-')).humanize('_')}`;
     // read & edit route
     let routeFile = fs.readFileSync(path.join(process.cwd(), 'src/routes', `${directory}.js`)).toString();
     routeFile = routeFile.split('\n');
@@ -13,8 +23,9 @@ async function newSubRoute(directory, name, method, definitionArg) {
     }
     // Updare swagger path file
     const currentPathFile = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/routes', `${directory}.paths.swagger.json`)).toString());
-    currentPathFile[`/${name}`] = {};
-    currentPathFile[`/${name}`][method] = {
+    const swaggerMethodPath = `/${((name.split('/')).map(el => (el[0] === ':') ? `{${el.slice(1)}}` : el)).join('/')}`
+    currentPathFile[swaggerMethodPath] = {};
+    currentPathFile[swaggerMethodPath][method] = {
         description: `${method} ${name} Status Page`,
             tags: [
                 directory
