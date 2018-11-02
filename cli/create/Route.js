@@ -2,6 +2,14 @@ const Validator = require('./validator');
 const newRoute = require('./newRoute');
 const newSubRoute = require('./newSubRoute');
 
+String.prototype.humanize = function (splitter, joiner='') {
+    var frags = this.split(splitter);
+    for (i=0; i<frags.length; i++) {
+      frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
+    }
+    return frags.join(joiner);
+}
+
 async function createRoute(type, directory, name, args) {
     try {
         let methods = {
@@ -27,18 +35,24 @@ async function createRoute(type, directory, name, args) {
                 await Validator.ioExpressDirectoryExists('controllers', directory);
                 await Validator.ioExpressFileExists(type, './', `${directory}.js`);
                 try {
-                    await Validator.ioExpressFileExists('controllers', directory, `${name}.controller.js`);
+                    const controllerName = `${(inputs.length === 0) ? 'get' : inputs[0]}${(((name.humanize('/')).humanize(':')).humanize('-')).humanize('_')}`;
+                    await Validator.ioExpressFileExists('controllers', directory, `${controllerName}.controller.js`);
                     console.log(`You are trying to create a sub route that already exists.`);
                     return -1;
                 } catch (e) {
                     newSubRoute(directory, name, (inputs.length === 0) ? 'get' : inputs[0], args.definition);
                 }
             } catch (e) {
+                if (typeof name !== 'undefined' || name.length !== 0) {
+                    newRoute(directory, args.tag, args.definition, (inputs.length === 0) ? 'get' : inputs[0]);
+                    return -1;
+                }
                 console.log(`Create the route /${ directory } first!`);
+                return -1;
             }
             return -1;
         } catch (e) {
-            newRoute(name, args.tag, args.definition, (inputs.length === 0) ? 'get' : inputs[0]);
+            newRoute(directory, args.tag, args.definition, (inputs.length === 0) ? 'get' : inputs[0]);
         }
     } catch (e) {
         console.log(`Run 'xprs create' command from a valid 'IO Express' project root!`);
