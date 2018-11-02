@@ -28,7 +28,8 @@ program
     .action(function(type, name, destination, destinationFileName, args){
         if (type === 'route') {
             name = name.split("/");
-            createRoute('routes', name.slice(0, name.length - 1).join('/'), name[name.length - 1], args);
+            const directoryName = name.shift();
+            createRoute('routes', directoryName, name.join('/'), args);
         } else if(type === 'controller') {
             name = name.split('/');
             createController(type, name, destination, args.definition);
