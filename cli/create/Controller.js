@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const Validator = require('./validator');
 
-async function createController (type, name, destination) {
+async function createController (type, name, destination, definitionArg) {
     try {
         await Validator.isIOExpress();
         try {
@@ -40,6 +40,14 @@ async function createController (type, name, destination) {
                 controllerTestFileContent = controllerTestFileContent.replace(`./${destination}`, `./${destination}.controller`);
                 await fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name[0], `${destination}.controller.js`), controllerFileContent);
                 await fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name[0], `${destination}.controller.spec.js`), controllerTestFileContent);
+                if (definitionArg) {
+                    const def = {};
+                    def[`${importName}ControllerResponse`] = {
+                        type: "",
+                        example: ""
+                    }
+                    await fs.writeFileSync(path.join(process.cwd(), 'src/controllers', `${name}.definitions.swagger.json`), JSON.stringify(def, null, 4));
+                }
                 console.log(`Controller created successfully at ${path.join(name[0], `${destination}.controller.js`)}`);
                 return -1;
             } catch (err) {
