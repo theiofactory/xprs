@@ -2,11 +2,11 @@
  * @function
  * @name MIDDLEWARE
  * @description MIDDLEWARE discription
- * @param {request} - Request object.
- * @param {response} - Response object.
- * @param {next} - next callback.
+ * @param {request} request - Request object.
+ * @param {response} response - Response object.
+ * @param {next} next - next function.
  *
- * @returns {Function} - callback.
+ * @returns {Function} - next function.
  */
 const MIDDLEWARE = (request, response, next) => next();
 
