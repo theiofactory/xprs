@@ -7,12 +7,10 @@ const validation = {
             const controllerPath = path.join(process.cwd(), '/src/controllers');
             const handlerPath = path.join(process.cwd(), '/src/handlers');
             const middlewarePath = path.join(process.cwd(), '/src/middlewares');
-            const modelsPath = path.join(process.cwd(), '/src/models');
             const routesPath = path.join(process.cwd(), '/src/routes');
             return (
                 fs.existsSync(controllerPath) && fs.existsSync(handlerPath) &&
-                fs.existsSync(middlewarePath) && fs.existsSync(modelsPath) &&
-                fs.existsSync(routesPath)
+                fs.existsSync(middlewarePath) && fs.existsSync(routesPath)
             ) ? resolve(true) : reject(false);
         });
     },
