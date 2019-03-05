@@ -1,12 +1,14 @@
 {
-  "name": "xprs",
+  "name": "@perkinsandwill-hub/xprs",
   "version": "1.0.0",
   "description": "Express CLI",
   "main": "cli/app.js",
-  "repository": "https://github.com/theiofactory/xprs.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theiofactory/xprs.git"
+  },
   "author": "Narayanan M Ramanathan <narayananramu6@gmail.com>",
   "license": "UNLICENSED",
-  "private": true,
   "bin": {
     "xprs": "bin/xprs"
   },
@@ -16,5 +18,18 @@
     "inquirer": "^6.2.0",
     "shelljs": "^0.8.2",
     "validate-npm-package-name": "^3.0.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/theiofactory/xprs/issues"
+  },
+  "homepage": "https://github.com/theiofactory/xprs#readme",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "express",
+    "restapi"
+  ]
 }
