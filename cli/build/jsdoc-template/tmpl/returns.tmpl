@@ -1,0 +1,17 @@
+<?js
+var returns = obj || [];
+var self = this;
+returns.forEach(function(data) {
+  if (data.description) {
+?>
+  <div class="param-desc">
+    <?js= data.description ?>
+  </div>
+<?js } if (data.type && data.type.names) {?>
+  <dl class="param-type">
+    <dt>Type</dt>
+    <dd>
+      <?js= self.partial('type.tmpl', data.type.names) ?>
+    </dd>
+  </dl>
+<?js }}) ?>

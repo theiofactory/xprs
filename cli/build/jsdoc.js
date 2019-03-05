@@ -1,12 +1,16 @@
 const { exec } = require('child_process');
+const dotenv = require('dotenv');
+const path = require('path');
 
 const Validator = require('./../create/validator');
+
+dotenv.config({ path: path.join(process.cwd(), '.env') });
 
 module.exports = async () => {
     try {
         await Validator.isIOExpress();
         try {
-            exec('jsdoc -c jsDoc.js', { cwd: process.cwd() }, (err, stdout, stderr) => {
+            exec(`jsdoc -c ${path.join(__dirname, 'jsdoc.config.js')}`, (err, stdout, stderr) => {
                 if (err) {
                     console.log(err);
                     console.log(stdout);

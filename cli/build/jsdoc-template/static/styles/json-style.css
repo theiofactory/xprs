@@ -1,0 +1,31 @@
+.json-wrapper {
+    padding: 1.25rem;
+    background-color: #f7f7f9;
+}
+.json-wrapper h5 {
+    margin-top: 0;
+}
+.json-block > .param {
+    margin-left: 1.875rem;
+    font-family: 'bt_mono', monospace;
+}
+.json-block > .param .name,
+.json-block > .param .type,
+.json-block > .param .description {
+    display: flex;
+    margin: 0 0 0 1.875rem;
+}
+.json-block > .param .properties {
+    margin-left: 1.875rem;
+}
+.json-block > .param .name p,
+.json-block > .param .type p,
+.json-block > .param .description p {
+    margin: 0 0 0 5px;
+}
+.json-block .description > p {
+    margin: 0;
+}
+.json-block .description > h4 {
+    margin: 0;
+}
