@@ -1,6 +1,6 @@
 const express = require('express');
 
-const CONTROLLER = require('./CONTROLLER');
+const CONTROLLER = require('./PATH');
 
 const router = express.Router();
 
