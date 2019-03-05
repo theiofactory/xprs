@@ -1,4 +1,5 @@
 const dotenv = require('dotenv');
+const path = require('path');
 
 dotenv.config();
 
@@ -29,7 +30,7 @@ module.exports = {
         },
     },
     opts: {
-        destination: process.env.JSDOC_DESTINATION,
+        destination: path.join(process.cwd(), '/docs/jsDoc'),
         encoding: 'utf8',
         private: true,
         recurse: true,
