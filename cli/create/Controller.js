@@ -42,7 +42,7 @@ async function createController (type, name, destination, definitionArg) {
                 await fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name[0], `${destination}.controller.spec.js`), controllerTestFileContent);
                 if (definitionArg) {
                     const def = {};
-                    def[`${importName}ControllerResponse`] = {
+                    def[`${name}ControllerResponse`] = {
                         type: "",
                         example: ""
                     }
