@@ -1,9 +1,12 @@
 const program = require('commander');
+
 const newCommand = require('./new');
 const createRoute = require('./create/Route');
 const createOthers = require('./create/Others');
 const createSwagger = require('./create/Swagger');
 const createController = require('./create/Controller');
+const buildJsdoc = require('./build/jsdoc');
+const buildSwagger = require('./build/swagger');
 
 program
     .command('new <name>')
@@ -11,6 +14,21 @@ program
     .description(`\tCreate a new IO Express application. "xprs new my_app" creates a new application called my_app in "./my_app"`)
     .action(function(name) {
         newCommand(name);
+    });
+
+program
+    .command('build <name>')
+    .alias('b')
+    .description(`\tBuilds jsdoc or swagger docs in given path`)
+    .action(function(name) {
+        if (name === 'jsdoc') {
+            buildJsdoc();
+        } else if (name === 'swagger') {
+            buildSwagger();
+        } else if (name === 'docs') {
+            buildJsdoc();
+            buildSwagger();
+        }
     });
 
 program
