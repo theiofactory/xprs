@@ -4,7 +4,7 @@ const path = require('path');
 async function newRoute(name, tagArg, definitionArg, method) {
     // read & copy controller route
     let dummyController = fs.readFileSync(path.join(__dirname, '../dummy/controller.js')).toString();
-    dummyController = dummyController.replace(/CONTROLLER/g, 'index');
+    dummyController = dummyController.replace(/CONTROLLER/g, `${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}`);
     fs.mkdirSync(path.join(process.cwd(), '/src/controllers', name));
     fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, `${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.controller.js`), dummyController);
     if (definitionArg) {
@@ -18,13 +18,13 @@ async function newRoute(name, tagArg, definitionArg, method) {
     }
     // read & copy dummy controller test
     let dummyControllerTest = fs.readFileSync(path.join(__dirname, '../dummy/controller.spec.js')).toString();
-    dummyControllerTest = dummyControllerTest.replace(/CONTROLLER/g, 'index');
-    dummyControllerTest = dummyControllerTest.replace('./index', `./${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.controller`);
+    dummyControllerTest = dummyControllerTest.replace(/CONTROLLER/g, `${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}`);
+    dummyControllerTest = dummyControllerTest.replace('./PATH', `./${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.controller`);
     fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, `${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.controller.spec.js`), dummyControllerTest);
     // read & copy dummy route
     let dummyRoute = fs.readFileSync(path.join(__dirname, '../dummy/route.js')).toString();
-    dummyRoute = dummyRoute.replace(/CONTROLLER/g, 'index');
-    dummyRoute = dummyRoute.replace('./index', `./../controllers/${name}/${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.controller`);
+    dummyRoute = dummyRoute.replace(/CONTROLLER/g, `${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}`);
+    dummyRoute = dummyRoute.replace('./PATH', `./../controllers/${name}/${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.controller`);
     if (method !== 'get') {
         dummyRoute = dummyRoute.split('\n');
         const dummyRouteIndex = dummyRoute.findIndex(item => item === `router.get('/', index);`);
