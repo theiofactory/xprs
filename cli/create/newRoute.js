@@ -6,7 +6,7 @@ async function newRoute(name, tagArg, definitionArg, method) {
     let dummyController = fs.readFileSync(path.join(__dirname, '../dummy/controller.js')).toString();
     dummyController = dummyController.replace(/CONTROLLER/g, 'index');
     fs.mkdirSync(path.join(process.cwd(), '/src/controllers', name));
-    fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, `${(method === 'get') ? 'i' : `${method}I`}ndex.controller.js`), dummyController);
+    fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, `${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.controller.js`), dummyController);
     if (definitionArg) {
         const def = {
             indexControllerResponse: {
@@ -14,17 +14,17 @@ async function newRoute(name, tagArg, definitionArg, method) {
                 example: ''
             }
         };
-        fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, `${(method === 'get') ? 'i' : `${method}I`}ndex.definitions.swagger.json`), JSON.stringify(def, null, 4));
+        fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, `${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.definitions.swagger.json`), JSON.stringify(def, null, 4));
     }
     // read & copy dummy controller test
     let dummyControllerTest = fs.readFileSync(path.join(__dirname, '../dummy/controller.spec.js')).toString();
     dummyControllerTest = dummyControllerTest.replace(/CONTROLLER/g, 'index');
-    dummyControllerTest = dummyControllerTest.replace('./index', `./${(method === 'get') ? 'i' : `${method}I`}ndex.controller`);
-    fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, `${(method === 'get') ? 'i' : `${method}I`}ndex.controller.spec.js`), dummyControllerTest);
+    dummyControllerTest = dummyControllerTest.replace('./index', `./${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.controller`);
+    fs.writeFileSync(path.join(process.cwd(), 'src/controllers', name, `${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.controller.spec.js`), dummyControllerTest);
     // read & copy dummy route
     let dummyRoute = fs.readFileSync(path.join(__dirname, '../dummy/route.js')).toString();
     dummyRoute = dummyRoute.replace(/CONTROLLER/g, 'index');
-    dummyRoute = dummyRoute.replace('./index', `./../controllers/${name}/${(method === 'get') ? 'i' : `${method}I`}ndex.controller`);
+    dummyRoute = dummyRoute.replace('./index', `./../controllers/${name}/${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.controller`);
     if (method !== 'get') {
         dummyRoute = dummyRoute.split('\n');
         const dummyRouteIndex = dummyRoute.findIndex(item => item === `router.get('/', index);`);
@@ -83,7 +83,7 @@ async function newRoute(name, tagArg, definitionArg, method) {
         fs.mkdirSync(path.join(process.cwd(), 'e2e'));
     }
     fs.mkdirSync(path.join(process.cwd(), 'e2e', name));
-    fs.writeFileSync(path.join(process.cwd(), 'e2e', name, `${(method === 'get') ? 'i' : `${method}I`}ndex.spec.js`), dummyRouteE2ETest);
+    fs.writeFileSync(path.join(process.cwd(), 'e2e', name, `${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.spec.js`), dummyRouteE2ETest);
     // read & edit main route
     let routeFile = fs.readFileSync(path.join(process.cwd(), 'src/routes/index.js')).toString();
     routeFile = routeFile.split('\n');
@@ -99,9 +99,9 @@ async function newRoute(name, tagArg, definitionArg, method) {
         fs.writeFileSync(path.join(process.cwd(), 'src/routes/index.js'), routeFile.join('\n'));
     }
 
-    console.log(`Controller      :  src/controllers/${name}/${(method === 'get') ? 'i' : `${method}I`}ndex.controller.js`);
+    console.log(`Controller      :  src/controllers/${name}/${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.controller.js`);
     console.log(`Route           :  src/routes/${name}.js`);
-    console.log(`Controller Test :  src/controllers/${name}/${(method === 'get') ? 'i' : `${method}I`}ndex.controller.spec.js`);
+    console.log(`Controller Test :  src/controllers/${name}/${method}${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}.controller.spec.js`);
     console.log(`Route E2E Test  :  e2e/${name}/index.spec.js`);
 }
 
