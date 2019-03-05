@@ -1,0 +1,105 @@
+<?js
+  var params = obj;
+
+  /* sort subparams under their parent params (like opts.classname) */
+  var parentParam = null;
+  params.forEach(function(param, i) {
+    var paramRegExp;
+
+    if (!param) { return; }
+
+    if (parentParam && parentParam.name && param.name) {
+      paramRegExp = new RegExp('^(?:' + parentParam.name + '(?:\\[\\])*)\\.(.+)$');
+
+      if (paramRegExp.test(param.name)) {
+        param.name = RegExp.$1;
+        parentParam.subparams = parentParam.subparams || [];
+        parentParam.subparams.push(param);
+        params[i] = null;
+      }
+      else {
+        parentParam = param;
+      }
+    } else {
+      parentParam = param;
+    }
+  });
+
+  /* determine if we need extra columns, "attributes" and "default" */
+  params.hasAttributes = false;
+  params.hasDefault = false;
+  params.hasName = false;
+
+  params.forEach(function(param) {
+    if (!param) { return; }
+
+    if (param.optional || param.nullable || param.variable) {
+      params.hasAttributes = true;
+    }
+
+    if (param.name) {
+      params.hasName = true;
+    }
+
+    if (typeof param.defaultvalue !== 'undefined') {
+      params.hasDefault = true;
+    }
+  });
+?>
+<div class="json-block">
+[
+  <?js
+    var self = this;
+    params.forEach(function(param) {
+      if (!param) { return; }
+  ?>
+  <div class="param">
+    {
+    <?js if (params.hasName) {?>
+        <div class="name">
+          <b>Name: </b>
+          <p><?js= param.name ?></p>
+        </div>
+    <?js } ?>
+    <div class="type">
+      <b>Type: </b>
+      <p><?js if (param.type && param.type.names) {?>
+        <?js= self.partial('type.tmpl', param.type.names) ?>
+      <?js } ?></p>
+    </div>
+    <?js if (params.hasAttributes) {?>
+      <p class="attribute">
+        <b>Attributes: </b>
+        <?js if (param.optional) { ?>
+          &lt;optional><br>
+        <?js } ?>
+        <?js if (param.nullable) { ?>
+          &lt;nullable><br>
+        <?js } ?>
+        <?js if (param.variable) { ?>
+          &lt;repeatable><br>
+        <?js } ?>
+      </p>
+    <?js } ?>
+    <?js if (params.hasDefault) {?>
+      <p class="default">
+        <?js if (typeof param.defaultvalue !== 'undefined') { ?>
+          <b>Default: </b> <?js= self.htmlsafe(param.defaultvalue) ?>
+        <?js } ?>
+      </p>
+    <?js } ?>
+    <div class="description">
+      <b>Description: </b>
+      <?js= param.description ?>
+    </div>
+    <div class="properties">
+      <?js if (param.subparams) { ?>
+        <b>Properties: </b>
+        <?js= self.partial('params.tmpl', param.subparams) ?>
+      <?js } ?>
+    </div>
+    }
+  </div>
+  <?js }) ?>
+]
+</div>
