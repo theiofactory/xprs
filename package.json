@@ -1,6 +1,6 @@
 {
   "name": "@perkinsandwill-hub/xprs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Express CLI",
   "main": "cli/app.js",
   "repository": {
